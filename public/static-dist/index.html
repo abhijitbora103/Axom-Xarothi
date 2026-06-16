@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" class="transition-colors duration-300">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axom Xarothi - Assam's Premier Recruitment, Schemes & Tourism Portal</title>
+    <!-- Tailwind CSS (via official v4 CDN or v3 compatible build CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            DEFAULT: '#001f3f',
+                            dark: '#00162b',
+                            light: '#0a3663'
+                        },
+                        assam: {
+                            green: '#2e7d32',
+                            darkgreen: '#1e5622',
+                            lightgreen: '#e8f5e9'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'ui-monospace', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Vector Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- TOP ANNOUNCEMENT / BREAKING NEWS TICKER -->
+    <div id="breaking-news-strip" class="bg-navy dark:bg-black text-white text-xs py-2 px-4 border-b border-navy-light/20 flex items-center overflow-hidden">
+        <span class="bg-red-650 bg-red-600 uppercase text-[10px] font-black px-2 py-0.5 rounded mr-3 shrink-0 animate-pulse tracking-wider flex items-center gap-1">
+            <i class="fa-solid fa-bullhorn"></i> <span class="lang-text" data-en="Breaking" data-as="ব্ৰেকিং নিউজ">Breaking</span>
+        </span>
+        <div class="relative w-full overflow-hidden whitespace-nowrap">
+            <div id="ticker-text" class="inline-block translate-x-full animate-[marquee_25s_linear_infinite] hover:pause font-semibold cursor-pointer">
+                <!-- Will be populated dynamically based on selected language in script.js -->
+                Loading local updates...
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NEWS HEADER -->
+    <header class="bg-white dark:bg-slate-950 shadow-sm border-b border-slate-150 dark:border-slate-800 transition-colors duration-300 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- LOGO & TAGLINE -->
+                <a href="#" onclick="showHomepage(event)" class="flex items-center space-x-3 group">
+                    <div class="w-11 h-11 bg-assam-green text-white rounded-2xl flex items-center justify-center shadow-md shadow-assam-green/20 group-hover:scale-105 transition-transform duration-300">
+                        <i class="fa-solid fa-compass text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-1.5">
+                            <span class="text-xl font-black text-navy dark:text-white uppercase tracking-tight">Axom</span>
+                            <span class="text-xl font-black text-assam-green uppercase tracking-tight">Xarothi</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider lang-text" data-en="Assam's Digital Portal" data-as="অসমৰ ডিজিটেল সাৰথি">Assam's Digital Portal</p>
+                    </div>
+                </a>
+
+                <!-- DESKTOP TOP NAVIGATION MENU & ACTIONS -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <a href="#" onclick="filterByCategory('all')" class="nav-item px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-navy dark:text-slate-300 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900 transition-all lang-text" data-en="Home" data-as="হোম">Home</a>
+                    <a href="#" onclick="filterByCategory('recruitment')" class="nav-item px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-navy dark:text-slate-300 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900 transition-all lang-text" data-en="Jobs" data-as="চাকৰি">Jobs</a>
+                    <a href="#" onclick="filterByCategory('scheme')" class="nav-item px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-navy dark:text-slate-300 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900 transition-all lang-text" data-en="Schemes" data-as="আঁচনি">Schemes</a>
+                    <a href="#" onclick="filterByCategory('education')" class="nav-item px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-navy dark:text-slate-300 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900 transition-all lang-text" data-en="Education" data-as="শিক্ষা">Education</a>
+                    <a href="#" onclick="filterByCategory('admitcard')" class="nav-item px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-navy dark:text-slate-300 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900 transition-all lang-text" data-en="Admit Card" data-as="প্ৰৱেশ পত্ৰ">Admit Card</a>
+                    <a href="#" onclick="filterByCategory('result')" class="nav-item px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-navy dark:text-slate-300 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900 transition-all lang-text" data-en="Results" data-as="ফলাফল">Results</a>
+                    <a href="#" onclick="filterByCategory('tech')" class="nav-item px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-navy dark:text-slate-300 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900 transition-all lang-text" data-en="Tech" data-as="প্ৰযুক্তি">Tech</a>
+                </nav>
+
+                <!-- HEADER CONTROLS (DARK MODE, LANGUAGE, MOBILE HAMBURGER) -->
+                <div class="flex items-center space-x-3">
+                    
+                    <!-- Language Toggle -->
+                    <button id="lang-toggle-btn" onclick="toggleLanguage()" class="p-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-905 dark:bg-slate-900 dark:hover:bg-slate-800 rounded-xl text-xs font-extrabold flex items-center space-x-1.5 transition-all text-navy dark:text-slate-200 border border-transparent dark:border-slate-800 active:scale-95 cursor-pointer">
+                        <i class="fa-solid fa-language text-sm"></i>
+                        <span id="lang-btn-text">অসমীয়া</span>
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
+                    <button id="dark-toggle-btn" onclick="toggleDarkMode()" class="p-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 rounded-xl transition-all border border-transparent dark:border-slate-800 active:scale-95 text-slate-600 dark:text-slate-200 cursor-pointer" title="Toggle Theme">
+                        <i class="fa-solid fa-moon text-sm dark:hidden"></i>
+                        <i class="fa-solid fa-sun text-sm hidden dark:block"></i>
+                    </button>
+
+                    <!-- Mobile Hamburger -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 rounded-xl transition-all text-slate-600 dark:text-slate-200 cursor-pointer">
+                        <i class="fa-solid fa-bars text-sm"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MOBILE NAVIGATION DRAWER -->
+        <div id="mobile-menu" class="hidden border-t border-slate-155 dark:border-slate-800 bg-white dark:bg-slate-950 md:hidden p-4 space-y-2 max-h-[85vh] overflow-y-auto">
+            <a href="#" onclick="filterByCategory('all'); toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-bold bg-slate-50 dark:bg-slate-900 text-navy dark:text-white text-xs sm:text-sm lang-text" data-en="Show All Highlights" data-as="সকলো শিতান দেখুওক">Show All Highlights</a>
+            <a href="#" onclick="filterByCategory('recruitment'); toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 text-xs sm:text-sm lang-text" data-en="Jobs (নিযুক্তি)" data-as="চাকৰি নিযুক্তি">Jobs (নিযুক্তি)</a>
+            <a href="#" onclick="filterByCategory('scheme'); toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 text-xs sm:text-sm lang-text" data-en="Welfare Schemes (আঁচনি)" data-as="চৰকাৰী আচঁনি">Welfare Schemes (আঁচনি)</a>
+            <a href="#" onclick="filterByCategory('education'); toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 text-xs sm:text-sm lang-text" data-en="Education (শিক্ষা)" data-as="শিক্ষামূলক বৃত্তিসমূহ">Education (শিক্ষা)</a>
+            <a href="#" onclick="filterByCategory('admitcard'); toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 text-xs sm:text-sm lang-text" data-en="Admit Cards (এডমিট)" data-as="প্ৰৱেশ পত্ৰসমূহ">Admit Cards (এডমিট)</a>
+            <a href="#" onclick="filterByCategory('result'); toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 text-xs sm:text-sm lang-text" data-en="Results (ফলাফল)" data-as="মেট্ৰিক ও পৰীক্ষা ফলাফল">Results (ফলাফল)</a>
+            <a href="#" onclick="filterByCategory('tech'); toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 text-xs sm:text-sm lang-text" data-en="Tech Portal (প্ৰযুক্তি)" data-as="প্ৰযুক্তিগত সেৱাসমূহ">Tech Portal (প্ৰযুক্তি)</a>
+            <a href="#" onclick="filterByCategory('tourism'); toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 text-xs sm:text-sm lang-text" data-en="Assam Tourism (পৰ্যটন)" data-as="অসম ভ্ৰমণ নিৰ্দেশিকা">Assam Tourism (পৰ্যটন)</a>
+        </div>
+    </header>
+
+    <!-- MAIN HOMEPAGE WRAPPER WITH SEARCH & MULTI-VIEW LAYOUT -->
+    <main id="app-homepage" class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- INTRO HERO & ADVANCED NEWS SEARCH BLOCK -->
+        <section class="mb-10">
+            <div class="bg-gradient-to-br from-[#0c3456] to-[#041a2e] rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-80 h-80 bg-assam-green/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="max-w-3xl relative z-10">
+                    <span class="bg-[#2e7d32]/20 text-emerald-300 border border-[#2e7d32]/30 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5 mb-4">
+                        <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                        <span class="lang-text" data-en="Strictly Verified News Updates" data-as="শুদ্ধ আৰু চৰকাৰীভাৱে সত্য তথ্য">Strictly Verified News Updates</span>
+                    </span>
+                    <h1 id="hero-title" class="text-3xl sm:text-5xl font-black tracking-tight leading-tight uppercase">
+                        <!-- Bilingual JS Inject -->
+                        Your Direct Link to Assam News, Exams & Schemes
+                    </h1>
+                    <p id="hero-subtitle" class="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Access official notices for ADRE direct recruitment vacancies, girls scoop stipends, Orunodoi monthly welfare pensions, and high-contrast North East tourism directions.
+                    </p>
+
+                    <!-- Large Interactive Search Input Wrapper -->
+                    <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                        <div class="relative flex-grow">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                            <input type="text" id="main-search-input" onkeyup="handleSearch(this.value)" placeholder="Search ADRE, Orunodoi, Nijut Moina, Scouty..." class="w-full bg-white text-slate-800 placeholder-slate-400 pl-11 pr-4 py-3.5 rounded-2xl text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-assam-green focus:bg-white box-border border border-slate-300 shadow-inner">
+                        </div>
+                        <button onclick="triggerSearchClear()" class="bg-assam-green hover:bg-assam-darkgreen text-white font-extrabold px-6 py-3.5 rounded-2xl text-xs sm:text-sm tracking-wider shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-rotate-left"></i> <span class="lang-text" data-en="Reset Search" data-as="পুনৰ স্থাপন">Reset Search</span>
+                        </button>
+                    </div>
+
+                    <!-- Visual Quick Badges -->
+                    <div id="quick-keywords-bar" class="mt-5 flex flex-wrap items-center gap-2 text-xs">
+                        <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]" data-en="Trending Today:" data-as="বৰ্তমান চৰ্চিত:">Trending Today:</span>
+                        <button onclick="handleQuickSearch('Orunodoi')" class="bg-white/10 hover:bg-white/20 text-white rounded-lg px-3 py-1 font-semibold transition-colors">Orunodoi 3.0</button>
+                        <button onclick="handleQuickSearch('ADRE')" class="bg-white/10 hover:bg-white/20 text-white rounded-lg px-3 py-1 font-semibold transition-colors">ADRE Grade 3 & 4</button>
+                        <button onclick="handleQuickSearch('Police')" class="bg-white/10 hover:bg-white/20 text-white rounded-lg px-3 py-1 font-semibold transition-colors">Assam Police</button>
+                        <button onclick="handleQuickSearch('Scooty')" class="bg-white/10 hover:bg-white/20 text-white rounded-lg px-3 py-1 font-semibold transition-colors">Free Scooty</button>
+                        <button onclick="handleQuickSearch('Kaziranga')" class="bg-white/10 hover:bg-white/20 text-white rounded-lg px-3 py-1 font-semibold transition-colors">Kaziranga</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BENTO FEATURED HERO SECTION -->
+        <section id="featured-hero-section" class="mb-10">
+            <h2 class="text-xl sm:text-2xl font-black text-navy dark:text-white capitalize mb-5 tracking-tight flex items-center gap-2">
+                <i class="fa-solid fa-star text-amber-500 animate-spin-slow"></i> 
+                <span class="lang-text" data-en="Featured Spotlight" data-as="বিশেষ আলোকপাত শিতান">Featured Spotlight</span>
+            </h2>
+            <div id="featured-hero-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Large Featured Article (Left Spanning 2 cols) -->
+                <div id="large-featured-card" class="lg:col-span-2 bg-gradient-to-r from-assam-green/10 to-[#0c3456]/5 dark:from-[#001f3f]/40 dark:to-slate-950 border border-slate-205 dark:border-slate-800 p-6 sm:p-8 rounded-3xl flex flex-col justify-between shadow-xs relative overflow-hidden group hover:shadow-lg transition-all">
+                    <div>
+                        <div class="flex items-center space-x-2.5 mb-4">
+                            <span class="bg-red-100 text-red-800 border border-red-200 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest lang-text" data-en="High Yield News" data-as="প্ৰধান গুৰুত্বপূৰ্ণ">High Yield News</span>
+                            <span class="text-xs text-slate-500 font-semibold uppercase"><i class="fa-solid fa-clock-rotate-left mr-1"></i> June 2026</span>
+                        </div>
+                        <h3 id="large-featured-title" class="text-xl sm:text-3xl font-black text-navy dark:text-white leading-snug group-hover:text-assam-green transition-colors">
+                            ADRE Grade 3 & 4 Written Examinations Schedules Released
+                        </h3>
+                        <p id="large-featured-excerpt" class="text-sm mt-3 text-slate-650 dark:text-slate-300 leading-relaxed font-sans">
+                            Complete roadmap overview of the upcoming Grade 3 and Grade 4 recruitment test dates across entire districts of Assam. Check key documentation checklists, instructions guide, and download schedules.
+                        </p>
+                    </div>
+                    <!-- Trigger CTA to single-post -->
+                    <div class="mt-6 flex items-center justify-between">
+                        <button onclick="readFullArticle('adre-recruitment-2026')" class="bg-navy hover:bg-navy-light text-white font-extrabold px-5 py-2.5 rounded-xl text-xs tracking-wider transition-colors active:scale-95 cursor-pointer dark:bg-slate-800 dark:hover:bg-slate-700 flex items-center gap-1.5">
+                            <span class="lang-text" data-en="Read Full Article" data-as="পূৰ্ণ প্ৰবন্ধ পঢ়ক">Read Full Article</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">● SLRC Board</span>
+                    </div>
+                </div>
+
+                <!-- Secondary Featured Info Cards (Right) -->
+                <div id="secondary-featured-cards" class="flex flex-col gap-4">
+                    <!-- Card 1 -->
+                    <div onclick="readFullArticle('orunodoi-scheme-2026')" class="bg-white dark:bg-slate-905 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 p-5 rounded-2xl flex flex-col justify-between hover:border-assam-green/40 shadow-xs hover:shadow-md cursor-pointer transition-all">
+                        <div>
+                            <span class="inline-block bg-emerald-50 text-emerald-800 border border-emerald-100 text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider lang-text" data-en="Welfare Scheme" data-as="সমাজ কল্যাণ">Welfare Scheme</span>
+                            <h4 class="text-sm sm:text-base font-extrabold text-navy dark:text-white mt-2 leading-none">Orunodoi 3.0 Direct Bank Enhancement</h4>
+                            <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">Beneficiaries will receive up to &nbsp; ₹1,400 per month directly in bank accounts via DBT.</p>
+                        </div>
+                        <span class="text-[10px] text-assam-green font-bold mt-3 block uppercase tracking-wider lang-text" data-en="Check Status →" data-as="স্থিতি বুজক →">Check Status →</span>
+                    </div>
+                    <!-- Card 2 -->
+                    <div onclick="readFullArticle('pragyan-free-scooty')" class="bg-white dark:bg-slate-955 dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 p-5 rounded-2xl flex flex-col justify-between hover:border-assam-green/40 shadow-xs hover:shadow-md cursor-pointer transition-all">
+                        <div>
+                            <span class="inline-block bg-indigo-50 text-indigo-800 border border-indigo-100 text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider lang-text" data-en="Education" data-as="শিক্ষা আঁচনি">Education</span>
+                            <h4 class="text-sm sm:text-base font-extrabold text-navy dark:text-white mt-1 leading-snug">Pragyan Bharati Electric & Petrol Scooty Eligibility list</h4>
+                            <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">Free scooties for boys scoring 75% and girls scoring 60% in high secondary board tests.</p>
+                        </div>
+                        <span class="text-[10px] text-assam-green font-bold mt-2.5 block uppercase tracking-wider lang-text" data-en="Read Guidelines →" data-as="নিৰ্দেশনা পঢ়ক →">Read Guidelines →</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOMEPAGE CORE LAYOUT: LATEST POSTS GRID (LEFT) + RICH SIDEBAR (RIGHT) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- LEFT COLUMN: LATEST POSTS & TABS FILTERS -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- NEWS CATEGORY TABS / HORIZONTAL SELECTOR -->
+                <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                    <h3 class="text-lg sm:text-xl font-black text-navy dark:text-white uppercase tracking-tight flex items-center gap-1.5 animate-pulse">
+                        <i class="fa-solid fa-rectangle-list text-assam-green"></i>
+                        <span class="lang-text" data-en="Latest News Releases" data-as="শেহতীয়া তথ্য জাননীসমূহ">Latest News Releases</span>
+                    </h3>
+                    <span id="posts-count-badge" class="bg-slate-100 text-slate-650 dark:bg-slate-800 dark:text-slate-350 px-3 py-1 rounded-full text-xs font-black">
+                        10 Articles
+                    </span>
+                </div>
+
+                <!-- CATEGORIES SLIDE PILLS -->
+                <div class="flex overflow-x-auto pb-2 gap-2 no-scrollbar">
+                    <button onclick="filterByCategory('all')" id="tab-all" class="category-tab-btn px-4 py-2.5 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all border bg-navy text-white border-navy dark:bg-slate-850 dark:border-slate-800">
+                        <span class="lang-text" data-en="All Bulletins" data-as="সকল শিতান">All Bulletins</span>
+                    </button>
+                    <button onclick="filterByCategory('recruitment')" id="tab-recruitment" class="category-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
+                        <span class="lang-text" data-en="Jobs" data-as="চাকৰি নিযুক্তি">Jobs</span>
+                    </button>
+                    <button onclick="filterByCategory('scheme')" id="tab-scheme" class="category-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
+                        <span class="lang-text" data-en="Schemes" data-as="চৰকাৰী আঁচনি">Schemes</span>
+                    </button>
+                    <button onclick="filterByCategory('education')" id="tab-education" class="category-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
+                        <span class="lang-text" data-en="Education" data-as="শিক্ষা">Education</span>
+                    </button>
+                    <button onclick="filterByCategory('admitcard')" id="tab-admitcard" class="category-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
+                        <span class="lang-text" data-en="Admit Card" data-as="প্ৰৱেশ পত্ৰ">Admit Card</span>
+                    </button>
+                    <button onclick="filterByCategory('result')" id="tab-result" class="category-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
+                        <span class="lang-text" data-en="Results" data-as="ফলাফল">Results</span>
+                    </button>
+                    <button onclick="filterByCategory('tech')" id="tab-tech" class="category-tab-btn px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
+                        <span class="lang-text" data-en="Tech Updates" data-as="প্ৰযুক্তিগত">Tech Updates</span>
+                    </button>
+                </div>
+
+                <!-- LATEST ARTICLES GRID CONTAINER -->
+                <div id="latest-posts-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Dynamic updates cards will be injected by script.js -->
+                </div>
+
+                <!-- EMPTY STATE NOT MATCHING FILTER -->
+                <div id="empty-posts-view" class="hidden text-center py-12 px-6 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-805 rounded-3xl">
+                    <i class="fa-solid fa-folder-open text-slate-300 text-4xl mb-3"></i>
+                    <h4 class="text-base font-bold text-slate-800 dark:text-slate-200 lang-text" data-en="No matching bulletins found" data-as="কোনো তথ্য বিচাৰি পোৱা নগল">No matching bulletins found</h4>
+                    <p class="text-xs text-slate-500 mt-1 lang-text" data-en="Try resetting directory filters or using different keywords." data-as="অনুগ্ৰহ কৰি ফিল্টাৰ ৰিছেট কৰক বা অন্য শব্দ টাইপ কৰক।">Try resetting directory filters or using different keywords.</p>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: POPULAR POSTS, GENERAL CATEGORIES, & ABOUT NEWS CACHE -->
+            <aside class="space-y-6">
+                
+                <!-- POPULAR POSTS SIDEBAR CARD -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-xs">
+                    <h4 class="text-sm font-black text-navy dark:text-white uppercase tracking-wider mb-4 pb-2 border-b border-slate-150 dark:border-slate-800 flex items-center gap-1.5">
+                        <i class="fa-solid fa-fire text-orange-500"></i>
+                        <span class="lang-text" data-en="Trending & Popular" data-as="আটাইতকৈ জনপ্ৰিয়">Trending & Popular</span>
+                    </h4>
+                    
+                    <ul class="space-y-4">
+                        <li onclick="readFullArticle('adre-recruitment-2026')" class="group flex gap-3 cursor-pointer">
+                            <span class="w-8 h-8 rounded-lg bg-red-50 text-red-700 text-xs font-black flex items-center justify-center shrink-0 border border-red-100 dark:bg-slate-900 dark:text-red-400 dark:border-slate-800">1</span>
+                            <div>
+                                <h5 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-assam-green transition-colors line-clamp-2">ADRE Grade 3 & 4 exam schedules checklist</h5>
+                                <span class="text-[10px] text-slate-400 font-semibold block mt-0.5 uppercase">Jobs &bull; 10k Views</span>
+                            </div>
+                        </li>
+
+                        <li onclick="readFullArticle('orunodoi-scheme-2026')" class="group flex gap-3 cursor-pointer">
+                            <span class="w-8 h-8 rounded-lg bg-orange-50 text-orange-700 text-xs font-black flex items-center justify-center shrink-0 border border-orange-100 dark:bg-slate-900 dark:text-orange-400 dark:border-slate-800">2</span>
+                            <div>
+                                <h5 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-assam-green transition-colors line-clamp-2">Orunodoi 3.0 eligibility list & payment status tracker</h5>
+                                <span class="text-[10px] text-slate-400 font-semibold block mt-0.5 uppercase">Schemes &bull; 8.5k Views</span>
+                            </div>
+                        </li>
+
+                        <li onclick="readFullArticle('nijut-moina-2025')" class="group flex gap-3 cursor-pointer">
+                            <span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-800 text-xs font-black flex items-center justify-center shrink-0 border border-emerald-100 dark:bg-slate-900 dark:text-emerald-400 dark:border-slate-800">3</span>
+                            <div>
+                                <h5 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-assam-green transition-colors line-clamp-2">Nijut Moina scheme girls monthly stipend guides</h5>
+                                <span class="text-[10px] text-slate-400 font-semibold block mt-0.5 uppercase">Schemes &bull; 7k Views</span>
+                            </div>
+                        </li>
+
+                        <li onclick="readFullArticle('adre-admit-card-2026')" class="group flex gap-3 cursor-pointer">
+                            <span class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-750 text-xs font-black flex items-center justify-center shrink-0 border border-indigo-100 dark:bg-slate-900 dark:text-indigo-400 dark:border-slate-800">4</span>
+                            <div>
+                                <h5 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-assam-green transition-colors line-clamp-2">Class 3/4 ADRE Admit Card direct link active</h5>
+                                <span class="text-[10px] text-slate-400 font-semibold block mt-0.5 uppercase">Admit Cards &bull; 6.2k Views</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- QUICK SUMMARY WIDGET -->
+                <div class="bg-navy text-white p-6 rounded-3xl relative overflow-hidden shadow-md">
+                    <div class="absolute -bottom-8 -right-8 w-24 h-24 bg-assam-green/13 rounded-full blur-xl"></div>
+                    <h4 class="text-sm font-black uppercase tracking-widest text-emerald-300 mb-2 lang-text" data-en="About Axom Xarothi" data-as="সাৰথিৰ মূল উদ্দেশ্য">About Axom Xarothi</h4>
+                    <p class="text-xs text-slate-350 leading-relaxed font-sans">
+                        Axom Xarothi is Assam's independent informational portal, helping students target top scores in ADRE, SI, Constable and other examinations while navigating official welfare portals.
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-navy-light/40 flex items-center justify-between text-[10px] uppercase font-bold text-slate-400">
+                        <span><i class="fa-solid fa-building-circle-check text-assam-green"></i> Verified</span>
+                        <span><i class="fa-solid fa-lock text-assam-green"></i> 100% Free</span>
+                    </div>
+                </div>
+
+                <!-- ASSAM ADRE PRACTICE RECALL QUESTION PREVIEW -->
+                <div class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl">
+                    <div class="flex items-center space-x-1 mb-2">
+                        <i class="fa-solid fa-graduation-cap text-assam-green"></i>
+                        <span class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">Practice GK Recall</span>
+                    </div>
+                    <p class="text-xs font-bold text-slate-800 dark:text-slate-250 leading-snug">Which is the largest river island in the world situated on the Brahmaputra?</p>
+                    <div class="mt-3 space-y-1.5">
+                        <button onclick="alert('Correct answer is Majuli!')" class="w-full text-left font-sans bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 p-2 text-[11px] font-semibold rounded border border-slate-200 dark:border-slate-800">A. Umananda Island</button>
+                        <button onclick="alert('Correct answer is Majuli!')" class="w-full text-left font-sans bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 p-2 text-[11px] font-semibold rounded border border-slate-200 dark:border-slate-800">B. Majuli Island</button>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+
+    </main>
+
+    <!-- SINGLE POST VIEW PAGE (HIDDEN BY DEFAULT - INJECTS DYNAMICALLY) -->
+    <main id="single-post-view" class="hidden flex-grow max-w-4xl mx-auto w-full px-4 sm:px-6 py-8">
+        
+        <!-- Back Navigation breadcrumb button -->
+        <button onclick="closeFullArticle()" class="mb-6 inline-flex items-center space-x-2 text-xs sm:text-sm font-extrabold text-navy hover:text-assam-green dark:text-slate-350 dark:hover:text-white transition-all cursor-pointer">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span class="lang-text" data-en="Back to News Homepage" data-as="মুখ্য পৃষ্ঠালৈ ঘূৰি যাওক">Back to News Homepage</span>
+        </button>
+
+        <article class="bg-white dark:bg-slate-950 rounded-3xl p-6 sm:p-10 border border-slate-2D0 border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+            
+            <!-- Category and Meta Headers -->
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span id="single-post-category" class="bg-assam-green text-white text-[10px] font-extrabold px-3.5 py-1 rounded-full uppercase tracking-wider">
+                    RECRUITMENT
+                </span>
+                <span id="single-post-date" class="text-xs text-slate-420 font-semibold text-slate-500 uppercase">
+                    <i class="fa-regular fa-calendar-check mr-1 text-slate-400"></i> June 2026
+                </span>
+                <span class="text-xs text-slate-500 font-semibold uppercase">
+                    <i class="fa-regular fa-hourglass mr-1 text-slate-400"></i> <span class="lang-text" data-en="4 Mins Read" data-as="৪ মিনিট পঢ়া">4 Mins Read</span>
+                </span>
+            </div>
+
+            <!-- Large Title -->
+            <h1 id="single-post-title" class="text-2xl sm:text-4xl font-black text-navy dark:text-white leading-tight">
+                ADRE Class III & IV written recruitment schedules
+            </h1>
+
+            <!-- Editorial Meta Column -->
+            <div class="flex items-center gap-3 my-5 py-4 border-y border-slate-150 dark:border-slate-800">
+                <div class="w-10 h-10 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center font-bold text-navy dark:text-slate-100 shadow-sm border border-slate-300 dark:border-slate-700">
+                    AX
+                </div>
+                <div>
+                    <h5 class="text-xs sm:text-sm font-black text-slate-800 dark:text-slate-205">Axom Xarothi Editorial</h5>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider lang-text" data-en="Government Schemes & Jobs Analyst" data-as="চৰকাৰী চাকৰি আৰু সমাজ কল্যাণ বিশেষজ্ঞ">Government Schemes & Jobs Analyst</p>
+                </div>
+            </div>
+
+            <!-- TABLE OF CONTENTS (TOC) -->
+            <section class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 p-5 rounded-2xl mb-8">
+                <span class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider block mb-2 lang-text" data-en="Table of Contents" data-as="সূচীপত্ৰ বা প্ৰবন্ধৰ শিতানসমূহ">Table of Contents</span>
+                <ol class="space-y-1.5 font-sans text-xs">
+                    <li><a href="#toc-overview" class="text-assam-green font-bold hover:underline transition-all">1. Overview of current circular</a></li>
+                    <li><a href="#toc-eligibility" class="text-assam-green font-bold hover:underline transition-all">2. Detailed Eligibility & Age Limit requirements</a></li>
+                    <li><a href="#toc-benefits" class="text-assam-green font-bold hover:underline transition-all">3. Key benefits & payouts</a></li>
+                    <li><a href="#toc-howto" class="text-assam-green font-bold hover:underline transition-all">4. Step-By-Step Application Guideline</a></li>
+                </ol>
+            </section>
+
+            <!-- Featured image visual container -->
+            <div id="single-post-image-box" class="h-56 sm:h-80 bg-gradient-to-br from-[#0a2f50] to-[#011424] rounded-2.5xl rounded-2xl mb-8 flex items-center justify-center relative shadow-inner">
+                <i class="fa-solid fa-compass text-6xl text-white/10 dark:text-white/5 animate-pulse"></i>
+                <div class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-xs text-[10px] uppercase font-bold text-emerald-300 py-1 px-3 rounded border border-white/10">
+                    Verified Release Source
+                </div>
+            </div>
+
+            <!-- ARTICLE CONTENT BODY -->
+            <div id="article-main-body" class="prose max-w-none text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-350 font-sans space-y-6">
+                <!-- Content will insert dynamically -->
+            </div>
+
+            <!-- FAQ ACCORDION SECTION -->
+            <section class="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800">
+                <h4 class="text-base sm:text-lg font-black text-navy dark:text-white uppercase tracking-tight mb-5 flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-question text-assam-green"></i>
+                    <span class="lang-text" data-en="Frequently Asked Questions (FAQ)" data-as="সঘনাই সোধা গুৰুত্বপূৰ্ণ প্ৰশ্ন">Frequently Asked Questions (FAQ)</span>
+                </h4>
+                <div id="faq-accordion-container" class="space-y-4">
+                    <!-- Dynamic FAQ accordions will print here -->
+                </div>
+            </section>
+
+            <!-- RELATED PORTAL ARTICLES -->
+            <section class="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800">
+                <h4 class="text-base sm:text-lg font-black text-navy dark:text-white uppercase tracking-tight mb-5 lang-text" data-en="Related Publications" data-as="অন্যান্য গুৰুত্বপূৰ্ণ আঁচনি ও জাননী">Related Publications</h4>
+                <div id="related-posts-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Inject dynamically -->
+                </div>
+            </section>
+
+            <!-- SOCIAL SHARING BUTTONS -->
+            <section class="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <p class="text-xs font-bold text-slate-500 uppercase lang-text" data-en="Share this official guide with others:" data-as="এই চৰকাৰী গাইড আনৰ সৈতে শ্বেয়াৰ কৰক:">Share this official guide with others:</p>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="triggerShareMessage('Twitter/X')" class="p-2 sm:px-3 sm:py-2 bg-[#1DA1F2] text-white rounded-xl text-xs sm:text-sm font-bold shadow-xs hover:opacity-90 active:scale-95 transition-all cursor-pointer"><i class="fa-brands fa-x-twitter"></i> Twitter</button>
+                    <button onclick="triggerShareMessage('WhatsApp')" class="p-2 sm:px-3 sm:py-2 bg-[#25D366] text-white rounded-xl text-xs sm:text-sm font-bold shadow-xs hover:opacity-90 active:scale-95 transition-all cursor-pointer"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+                    <button onclick="triggerShareMessage('Facebook')" class="p-2 sm:px-3 sm:py-2 bg-[#1877F2] text-white rounded-xl text-xs sm:text-sm font-bold shadow-xs hover:opacity-90 active:scale-95 transition-all cursor-pointer"><i class="fa-brands fa-facebook"></i> Facebook</button>
+                    <button onclick="triggerShareMessage('Telegram')" class="p-2 sm:px-3 sm:py-2 bg-[#0088cc] text-white rounded-xl text-xs sm:text-sm font-bold shadow-xs hover:opacity-90 active:scale-95 transition-all cursor-pointer"><i class="fa-brands fa-telegram"></i> Telegram</button>
+                    <button onclick="copyArticleLink()" class="p-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 rounded-xl text-xs sm:text-sm font-black active:scale-95 transition-all cursor-pointer border border-slate-350 dark:border-slate-700" title="Copy link"><i class="fa-solid fa-copy"></i></button>
+                </div>
+            </section>
+
+        </article>
+    </main>
+
+    <!-- FOOTER WITH ABOUT, CONTACT, PRIVACY POLICY, DISCLAIMER -->
+    <footer class="bg-slate-900 border-t border-slate-800 text-slate-400 text-xs sm:text-sm py-12 px-4 sm:px-6 lg:px-8 mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            
+            <!-- About -->
+            <div class="space-y-3">
+                <h5 class="text-white font-black text-base uppercase tracking-wider">Axom <span class="text-assam-green">Xarothi</span></h5>
+                <p class="text-xs leading-relaxed text-slate-400 lang-text" data-en="Ensuring equitable access to the latest recruitment updates, school results checklists, exams strategy guides, and state welfare missions." data-as="নিযুক্তি বিজ্ঞাপন, ফলাফল, পৰীক্ষা কুইজ আৰু দৰিদ্ৰ কল্যাণ আঁচনিৰ শুদ্ধ বাৰ্তা সৰ্বসাধাৰণলৈ বিয়পাই দিয়া আমাৰ দায়িত্ব।">
+                    Ensuring equitable access to the latest recruitment updates, school results checklists, exams strategy guides, and state welfare missions.
+                </p>
+                <div class="pt-2 text-xs font-bold text-slate-500 uppercase tracking-widest leading-none">
+                    &copy; <span id="footer-year">2026</span> Axom Xarothi
+                </div>
+            </div>
+
+            <!-- Contact / Address Details -->
+            <div class="space-y-2">
+                <h6 class="text-white font-black uppercase text-xs tracking-wider lang-text" data-en="Contact Information" data-as="যোগাযোগ আৰু ঠিকনা">Contact Information</h6>
+                <ul class="space-y-2 text-xs font-medium">
+                    <li><i class="fa-solid fa-envelope text-assam-green mr-2"></i> info@axomxarothi.in</li>
+                    <li><i class="fa-solid fa-map-location-dot text-assam-green mr-2"></i> Guwahati, Assam, Pin-781001</li>
+                    <li><i class="fa-solid fa-phone text-assam-green mr-2"></i> Helpline: +91-361-223344</li>
+                </ul>
+            </div>
+
+            <!-- Privacy Policy & Terms Links -->
+            <div class="space-y-2">
+                <h6 class="text-white font-black uppercase text-xs tracking-wider lang-text" data-en="Rules & Policies" data-as="নিয়মাৱলী আৰু নীতি">Rules & Policies</h6>
+                <ul class="space-y-1.5 text-xs text-slate-400">
+                    <li><a href="#" onclick="alert('Privacy Policy info: We adhere to standard cookies parameters. Your session is completely safe offline.')" class="hover:text-white transition-colors duration-200">Privacy Policy (গোপনীয়তা নীতি)</a></li>
+                    <li><a href="#" onclick="alert('Terms and Conditions: All material on Axom Xarothi is for general helper guides, completely free with no paywalls.')" class="hover:text-white transition-colors duration-200">Terms of Use (ব্যৱহাৰৰ চৰ্ত)</a></li>
+                    <li><a href="#" onclick="alert('Official Website coordinates lists: Always check resultsassam.nic.in, sebaonline.org or orunodoi.assam.gov.in directly for security.')" class="hover:text-white transition-colors duration-200">Official Links Disclaimer</a></li>
+                </ul>
+            </div>
+
+            <!-- DISCLAIMER MANDATORY BOX -->
+            <div class="space-y-2 bg-[#0c243a] p-4.5 p-4 rounded-2xl border border-navy-light/40">
+                <h6 class="text-orange-400 font-extrabold uppercase text-[10px] tracking-widest flex items-center gap-1.5">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span class="lang-text" data-en="Mandatory Disclaimer" data-as="গুৰুত্বপূৰ্ণ সতৰ্কবাৰ্তা">Mandatory Disclaimer</span>
+                </h6>
+                <p id="disclaimer-text" class="text-[11px] leading-relaxed text-slate-300 font-medium">
+                    Axom Xarothi is an independent private educational and welfare helper portal. We are not representing nor backed by any official State Government of Assam department. Check original notifications before applying.
+                </p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- STICKY TOAST SHARING POPUP -->
+    <div id="share-toast" class="fixed top-24 right-6 bg-slate-900 border border-slate-800 text-white px-5 py-3 rounded-2xl shadow-2xl z-50 text-xs font-bold transition-all duration-300 transform translate-x-full flex items-center gap-2">
+        <i class="fa-solid fa-check-circle text-emerald-400 text-sm"></i>
+        <span id="share-toast-msg">Article link copied successfully!</span>
+    </div>
+
+    <!-- OFFLINE PORTAL CHATBOT FLAYER MODULE -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <!-- Floating Dialog Wrapper -->
+        <div id="portal-chatbox-widget" class="hidden w-[90vw] sm:w-[380px] h-[480px] bg-white dark:bg-slate-950 border border-slate-205 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col justify-between mb-4 transform transition-all duration-300 scale-95 origin-bottom-right">
+            
+            <!-- Chat Head -->
+            <div class="bg-navy dark:bg-black text-white p-4 flex items-center justify-between border-b border-navy-light/20">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-assam-green text-white rounded-full flex items-center justify-center relative">
+                        <i class="fa-solid fa-robot text-xs"></i>
+                        <span class="absolute bottom-0 right-0 w-2 h-2 bg-green-400 rounded-full border border-navy"></span>
+                    </div>
+                    <div>
+                        <h5 class="text-xs sm:text-sm font-black text-white uppercase tracking-wider">Xarothi AI Bot</h5>
+                        <p class="text-[10px] text-slate-400 font-extrabold flex items-center gap-1"><i class="fa-solid fa-sparkles text-emerald-400"></i> BILINGUAL BOT CHANNEL</p>
+                    </div>
+                </div>
+                <button onclick="toggleFloatingChat()" class="text-white/60 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark text-sm"></i></button>
+            </div>
+
+            <!-- Chat Message Window -->
+            <div id="chat-messages-container" class="flex-grow overflow-y-auto p-4 space-y-3 bg-slate-50 dark:bg-slate-900/40 text-xs">
+                <!-- Welcome Assistant Chat -->
+                <div class="flex justify-start">
+                    <div class="max-w-[85%] bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 p-3 rounded-2xl rounded-bl-none shadow-xs border border-slate-200 dark:border-slate-900 leading-normal">
+                        নমস্কাৰ (Hello)! Welcome to the static preview of Axom Xarothi AI. Ask me anything about ADRE exams, Orunodoi 3.0 benefits status, or tourist guidance Best practices here!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Suggestions pills -->
+            <div class="p-2 border-t border-slate-150 bg-slate-100 dark:bg-slate-900/60 dark:border-slate-800 flex gap-1.5 overflow-x-auto no-scrollbar">
+                <button onclick="sendQuickChatMsg('How to apply Orunodoi?')" class="text-[10px] font-bold bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-705 dark:text-slate-300 px-3 py-1.5 rounded-full shrink-0">Apply Orunodoi</button>
+                <button onclick="sendQuickChatMsg('Tell me the syllabus of ADRE')" class="text-[10px] font-bold bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-705 dark:text-slate-300 px-3 py-1.5 rounded-full shrink-0">ADRE Syllabus</button>
+                <button onclick="sendQuickChatMsg('Best Kaziranga safari months')" class="text-[10px] font-bold bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-705 dark:text-slate-300 px-3 py-1.5 rounded-full shrink-0">Kaziranga Dates</button>
+            </div>
+
+            <!-- Input Box -->
+            <div class="p-3 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+                <input type="text" id="chat-input-field" placeholder="Ask helper assistant..." onkeyup="if(event.key==='Enter') sendFloatingChatMsg()" class="flex-grow px-3 py-2 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs sm:text-sm focus:outline-none focus:bg-white dark:focus:bg-black text-slate-800 dark:text-slate-100">
+                <button onclick="sendFloatingChatMsg()" class="bg-navy dark:bg-slate-800 p-2.5 rounded-xl text-emerald-400 cursor-pointer"><i class="fa-solid fa-paper-plane text-xs"></i></button>
+            </div>
+
+        </div>
+
+        <!-- Pulse floating icon button trigger -->
+        <button onclick="toggleFloatingChat()" class="bg-navy dark:bg-black border border-slate-800 text-white rounded-full p-4 flex items-center justify-center shadow-2xl relative cursor-pointer active:scale-95 transition-transform group hover:scale-105">
+            <span class="absolute -top-1 -left-1 flex h-4 w-4">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-4 w-4 bg-emerald-500"></span>
+            </span>
+            <div class="flex items-center space-x-1.5">
+                <i class="fa-solid fa-sparkles text-emerald-400 animate-spin-slow text-sm"></i>
+                <span class="text-xs uppercase font-black tracking-widest lang-text" data-en="AI Chat Helper" data-as="সহায়িকা ব'ট">AI Chat Helper</span>
+            </div>
+        </button>
+    </div>
+
+    <!-- JS INJECT -->
+    <script src="script.js"></script>
+</body>
+</html>

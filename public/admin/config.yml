@@ -1,0 +1,41 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "jobs"
+    label: "Job Bulletins"
+    folder: "src/content/jobs"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Department", name: "department", widget: "string" }
+      - { label: "Total Vacancies", name: "vacancies", widget: "number" }
+      - { label: "Last Date", name: "last_date", widget: "string" }
+      - { label: "Body Text", name: "body", widget: "markdown" }
+
+  - name: "schemes"
+    label: "Welfare Schemes"
+    folder: "src/content/schemes"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Scheme Name", name: "title", widget: "string" }
+      - { label: "Eligibility", name: "eligibility", widget: "string" }
+      - { label: "Monthly Benefit Amount", name: "benefit_amount", widget: "string" }
+      - { label: "Body Text", name: "body", widget: "markdown" }
+
+  - name: "tourism"
+    label: "Tourism"
+    folder: "src/content/tourism"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Spot Name", name: "title", widget: "string" }
+      - { label: "Location", name: "location", widget: "string" }
+      - { label: "Featured Image", name: "image", widget: "image" }
+      - { label: "Body Text", name: "body", widget: "markdown" }

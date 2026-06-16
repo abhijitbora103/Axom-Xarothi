@@ -1,0 +1,43 @@
+/* Custom Style helpers for Axom Xarothi News Portal */
+
+@keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* Custom CSS Scrollbar management */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Pause animation on hover */
+.hover\:pause:hover {
+    animation-play-state: paused;
+}
+
+/* Table of Contents soft hash anchor highlight */
+:target {
+    scroll-margin-top: 100px;
+    background-color: rgba(46, 125, 50, 0.1);
+    border-radius: 8px;
+    padding: 4px;
+}
+
+/* Premium animation curves */
+.animate-spin-slow {
+    animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
